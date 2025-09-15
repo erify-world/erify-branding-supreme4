@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <defs>
+    <radialGradient id="crownGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="40%" stop-color="#FF8A1A"/>
+      <stop offset="100%" stop-color="#FF4500"/>
+    </radialGradient>
+    <linearGradient id="blueGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#11C9FF"/>
+      <stop offset="100%" stop-color="#0099CC"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="400" fill="#0A0B0C"/>
+  
+  <!-- Main crest shape -->
+  <path d="M400 50 L350 100 L300 150 L350 200 L400 350 L450 200 L500 150 L450 100 Z" 
+        fill="url(#crownGlow)" opacity="0.9"/>
+  
+  <!-- Inner diamond -->
+  <polygon points="400,100 350,150 400,200 450,150" fill="url(#blueGlow)" opacity="0.8"/>
+  
+  <!-- Center crown -->
+  <polygon points="400,120 390,140 400,160 410,140" fill="#FFD700"/>
+  
+  <!-- Text -->
+  <text x="400" y="280" font-family="Arial, sans-serif" font-size="32" font-weight="bold" 
+        text-anchor="middle" fill="#11C9FF">SUPREME 4</text>
+  <text x="400" y="320" font-family="Arial, sans-serif" font-size="20" 
+        text-anchor="middle" fill="#FFD700">ERIFY™</text>
+</svg>

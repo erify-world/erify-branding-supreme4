@@ -1,0 +1,63 @@
+/* ERIFY™ Glow Kit CSS - Branding Styles */
+
+/* Base glow utilities */
+.erify-glow {
+  box-shadow: 0 0 20px rgba(17, 201, 255, 0.5);
+  transition: box-shadow 0.3s ease;
+}
+
+.erify-glow:hover {
+  box-shadow: 0 0 30px rgba(17, 201, 255, 0.8);
+}
+
+/* Neon text effects */
+.neon-text {
+  text-shadow: 
+    0 0 5px rgba(17, 201, 255, 0.8),
+    0 0 10px rgba(17, 201, 255, 0.6),
+    0 0 15px rgba(17, 201, 255, 0.4),
+    0 0 20px rgba(17, 201, 255, 0.2);
+}
+
+.neon-gold {
+  text-shadow: 
+    0 0 5px rgba(255, 215, 0, 0.8),
+    0 0 10px rgba(255, 215, 0, 0.6),
+    0 0 15px rgba(255, 215, 0, 0.4),
+    0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+/* Button glow effects */
+.btn-glow {
+  background: linear-gradient(45deg, rgba(17, 201, 255, 0.1), rgba(255, 215, 0, 0.1));
+  border: 1px solid rgba(17, 201, 255, 0.4);
+  box-shadow: 0 4px 15px rgba(17, 201, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.btn-glow:hover {
+  box-shadow: 0 6px 25px rgba(17, 201, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Crown glow animation */
+@keyframes crown-glow {
+  0%, 100% { 
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6)); 
+  }
+  50% { 
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.9)); 
+  }
+}
+
+.crown-glow {
+  animation: crown-glow 2s ease-in-out infinite;
+}
+
+/* ERIFY brand colors */
+:root {
+  --erify-blue: #11C9FF;
+  --erify-gold: #FFD700;
+  --erify-dark: #0A0B0C;
+  --erify-light: #EEF2F6;
+}
