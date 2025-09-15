@@ -1,0 +1,79 @@
+# ERIFY Campaign Performance Reporting Configuration
+
+# Data Sources Configuration
+data_sources:
+  google_analytics:
+    enabled: true
+    utm_tracking: true
+    view_id: "${GA_VIEW_ID}"
+  
+  social_platforms:
+    twitter:
+      enabled: true
+      api_key: "${TWITTER_API_KEY}"
+      bearer_token: "${TWITTER_BEARER_TOKEN}"
+    
+    linkedin:
+      enabled: true
+      client_id: "${LINKEDIN_CLIENT_ID}"
+      client_secret: "${LINKEDIN_CLIENT_SECRET}"
+    
+    facebook:
+      enabled: true
+      app_id: "${FACEBOOK_APP_ID}"
+      app_secret: "${FACEBOOK_APP_SECRET}"
+  
+  erify_dashboard:
+    enabled: true
+    api_endpoint: "${ERIFY_DASHBOARD_API}"
+    api_key: "${ERIFY_API_KEY}"
+
+# Report Configuration
+reports:
+  daily:
+    enabled: true
+    schedule: "0 9 * * *"  # 9 AM UTC daily
+    metrics:
+      - engagement_rate
+      - click_through_rate
+      - referral_conversions
+      - user_sessions
+      - bounce_rate
+  
+  weekly:
+    enabled: true
+    schedule: "0 10 * * 1"  # 10 AM UTC every Monday
+    metrics:
+      - weekly_engagement_summary
+      - referral_performance
+      - user_demographics
+      - conversion_funnel
+      - platform_comparison
+
+# Delivery Configuration
+delivery:
+  email:
+    enabled: true
+    smtp_server: "${SMTP_SERVER}"
+    smtp_port: 587
+    username: "${SMTP_USERNAME}"
+    password: "${SMTP_PASSWORD}"
+    recipients:
+      - "${REPORT_EMAIL_RECIPIENTS}"
+    templates:
+      daily: "templates/daily_report_email.html"
+      weekly: "templates/weekly_report_email.html"
+  
+  slack:
+    enabled: true
+    webhook_url: "${SLACK_WEBHOOK_URL}"
+    channel: "#campaign-reports"
+    templates:
+      daily: "templates/daily_report_slack.json"
+      weekly: "templates/weekly_report_slack.json"
+
+# Thresholds and Alerts
+alerts:
+  engagement_drop_threshold: 15  # Alert if engagement drops by 15%
+  conversion_rate_threshold: 2   # Alert if conversion rate drops below 2%
+  traffic_spike_threshold: 50    # Alert if traffic increases by 50%
