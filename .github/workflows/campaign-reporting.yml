@@ -1,0 +1,133 @@
+name: Automated Campaign Reporting
+
+on:
+  schedule:
+    # Daily reports at 9:00 AM UTC
+    - cron: '0 9 * * *'
+    # Weekly reports at 10:00 AM UTC every Monday
+    - cron: '0 10 * * 1'
+  
+  workflow_dispatch:
+    inputs:
+      report_type:
+        description: 'Type of report to generate'
+        required: true
+        default: 'daily'
+        type: choice
+        options:
+          - daily
+          - weekly
+          - both
+
+env:
+  # Data Source API Keys (Configure in repository secrets)
+  GA_VIEW_ID: ${{ secrets.GA_VIEW_ID }}
+  TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+  TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
+  LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
+  LINKEDIN_CLIENT_SECRET: ${{ secrets.LINKEDIN_CLIENT_SECRET }}
+  FACEBOOK_APP_ID: ${{ secrets.FACEBOOK_APP_ID }}
+  FACEBOOK_APP_SECRET: ${{ secrets.FACEBOOK_APP_SECRET }}
+  ERIFY_DASHBOARD_API: ${{ secrets.ERIFY_DASHBOARD_API }}
+  ERIFY_API_KEY: ${{ secrets.ERIFY_API_KEY }}
+  
+  # Email Configuration
+  SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+  SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+  SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+  REPORT_EMAIL_RECIPIENTS: ${{ secrets.REPORT_EMAIL_RECIPIENTS }}
+  
+  # Slack Configuration
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+jobs:
+  generate-daily-report:
+    if: github.event.schedule == '0 9 * * *' || github.event.inputs.report_type == 'daily' || github.event.inputs.report_type == 'both'
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      
+      - name: Install dependencies
+        run: |
+          cd scripts
+          pip install -r requirements.txt
+      
+      - name: Generate daily report
+        run: |
+          cd scripts/reports
+          python generate_daily_report.py
+        continue-on-error: true
+      
+      - name: Upload daily report artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: daily-reports
+          path: scripts/reports/reports/daily_report_*.json
+          retention-days: 30
+      
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "Daily report generation failed. Check logs for details."
+          # Add Slack notification for failures if needed
+
+  generate-weekly-report:
+    if: github.event.schedule == '0 10 * * 1' || github.event.inputs.report_type == 'weekly' || github.event.inputs.report_type == 'both'
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      
+      - name: Install dependencies
+        run: |
+          cd scripts
+          pip install -r requirements.txt
+      
+      - name: Generate weekly report
+        run: |
+          cd scripts/reports
+          python generate_weekly_report.py
+        continue-on-error: true
+      
+      - name: Upload weekly report artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: weekly-reports
+          path: scripts/reports/reports/weekly_report_*.json
+          retention-days: 90
+      
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "Weekly report generation failed. Check logs for details."
+          # Add Slack notification for failures if needed
+
+  cleanup-old-reports:
+    runs-on: ubuntu-latest
+    if: github.event.schedule == '0 10 * * 1'  # Run weekly cleanup
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Clean up old report files
+        run: |
+          cd scripts/reports
+          # Keep only last 30 days of daily reports
+          find reports/ -name "daily_report_*.json" -type f -mtime +30 -delete 2>/dev/null || true
+          # Keep only last 90 days of weekly reports
+          find reports/ -name "weekly_report_*.json" -type f -mtime +90 -delete 2>/dev/null || true
+          echo "Old report files cleaned up"

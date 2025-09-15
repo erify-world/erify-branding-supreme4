@@ -1,0 +1,73 @@
+{
+  "text": "ERIFY Daily Campaign Report - {{report_date}}",
+  "blocks": [
+    {
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": "🏆 ERIFY Daily Campaign Report - {{report_date}}"
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*📊 Daily Performance Summary*"
+      }
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Total Engagement:* {{total_engagement}}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Conversions:* {{total_conversions}}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Avg Engagement Rate:* {{avg_engagement_rate}}%"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Website Sessions:* {{total_sessions}}"
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*🏆 Platform Performance*\n• *Twitter/X:* {{twitter_engagement_rate}}% engagement ({{twitter_likes}} likes)\n• *LinkedIn:* {{linkedin_engagement_rate}}% engagement ({{linkedin_likes}} likes)\n• *Facebook:* {{facebook_engagement_rate}}% engagement ({{facebook_likes}} likes)\n• *ERIVOX:* {{erivox_engagement_rate}}% engagement ({{erivox_interactions}} interactions)"
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*✨ Key Highlights*\n• Supreme 4PW Crown Seal campaign continues strong performance\n• VIP Referral Program showing excellent conversion rates\n• Mobile engagement increasing significantly\n• ERIVOX platform showing highest engagement rates"
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*🔗 Top Performing Campaign*\nVIP Referral Program: 13.76% conversion rate\nSupreme 4PW Launch: 890 clicks, 5.06% conversion"
+      }
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "📈 Report generated automatically at {{generated_time}} | <https://github.com/erify-world/erify-branding-supreme4|View Campaign Assets>"
+        }
+      ]
+    }
+  ]
+}

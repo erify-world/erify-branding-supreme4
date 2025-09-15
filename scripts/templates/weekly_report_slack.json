@@ -1,0 +1,121 @@
+{
+  "text": "ERIFY Weekly Campaign Report - {{week_start}} to {{report_date}}",
+  "blocks": [
+    {
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": "📊 ERIFY Weekly Campaign Report"
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Report Period:* {{week_start}} to {{report_date}}\n*Generated:* {{generated_time}}"
+      }
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*📈 Executive Summary*"
+      }
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Weekly Engagement:* {{total_weekly_engagement}}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Conversions:* {{weekly_conversions}}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Avg Engagement Rate:* {{average_engagement_rate}}%"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Conversion Growth:* {{conversion_rate_improvement}}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*🏆 Key Achievements*\n• VIP Referral Program exceeded targets by 37%\n• ERIVOX platform: +22% engagement growth\n• Supreme 4PW Crown Seal: Strong momentum maintained\n• Mobile engagement: +15% week-over-week"
+      }
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*🏆 Platform Performance (Weekly Growth)*"
+      }
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Twitter/X*\n1,250 engagement\n1.47% rate (+15.2%)"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*LinkedIn*\n890 engagement\n1.98% rate (+8.7%)"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Facebook*\n1,560 engagement\n1.70% rate (+11.3%)"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*ERIVOX* :star:\n456 engagement\n3.80% rate (+18.9%)"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*💰 Top Performing Campaigns*\n• *VIP Referral:* 13.73% conversion, $26,700 revenue\n• *Supreme 4PW:* 4.99% conversion, $15,600 revenue\n• *Neon Series:* 5.39% conversion, $4,450 revenue"
+      }
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*💡 Strategic Recommendations*\n• Increase VIP Referral Program investment (478.9% ROI)\n• Expand Neon Crown Series content\n• Focus resources on ERIVOX platform growth\n• Optimize mobile experience (67.8% of traffic)"
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*👥 Audience Insights*\n• Primary demographic: 25-34 years (45.2%)\n• Mobile-first audience: 67.8% mobile traffic\n• Peak days: Tuesday, Wednesday, Thursday\n• Best times: 10-11am, 3-4pm, 8-9pm"
+      }
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "📊 Full report available via email | <https://github.com/erify-world/erify-branding-supreme4|Campaign Assets> | <#{{dashboard_channel}}|Analytics Dashboard>"
+        }
+      ]
+    }
+  ]
+}

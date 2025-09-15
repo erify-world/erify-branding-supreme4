@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERIFY Daily Campaign Report</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #11C9FF 0%, #FFD700 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        .header p {
+            margin: 10px 0 0;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-left: 4px solid #11C9FF;
+            background: #f8fbff;
+            border-radius: 8px;
+        }
+        .section h2 {
+            margin: 0 0 15px;
+            color: #2c3e50;
+            font-size: 20px;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .metric-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-top: 3px solid #11C9FF;
+        }
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #11C9FF;
+            margin-bottom: 5px;
+        }
+        .metric-label {
+            color: #666;
+            font-size: 14px;
+        }
+        .platform-performance {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .platform-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e1e8ed;
+        }
+        .platform-name {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        .engagement-rate {
+            font-size: 18px;
+            color: #11C9FF;
+            font-weight: bold;
+        }
+        .alerts {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .alert-positive {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        .alert-warning {
+            background: #fff3cd;
+            border-color: #ffeaa7;
+            color: #856404;
+        }
+        .highlights {
+            background: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .highlights ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .footer a {
+            color: #11C9FF;
+            text-decoration: none;
+        }
+        @media (max-width: 600px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            .platform-performance {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ERIFY™ Daily Campaign Report</h1>
+            <p>{{report_date}} | Generated at {{generated_time}}</p>
+        </div>
+        
+        <div class="content">
+            <!-- Key Metrics Overview -->
+            <div class="section">
+                <h2>📊 Daily Performance Overview</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">{{total_engagement}}</div>
+                        <div class="metric-label">Total Engagement</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">{{total_conversions}}</div>
+                        <div class="metric-label">Conversions</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">{{avg_engagement_rate}}%</div>
+                        <div class="metric-label">Avg Engagement Rate</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">{{total_sessions}}</div>
+                        <div class="metric-label">Website Sessions</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Platform Performance -->
+            <div class="section">
+                <h2>🏆 Platform Performance</h2>
+                <div class="platform-performance">
+                    <div class="platform-card">
+                        <div class="platform-name">Twitter/X</div>
+                        <div class="engagement-rate">{{twitter_engagement_rate}}%</div>
+                        <div style="font-size: 12px; color: #666;">{{twitter_likes}} likes</div>
+                    </div>
+                    <div class="platform-card">
+                        <div class="platform-name">LinkedIn</div>
+                        <div class="engagement-rate">{{linkedin_engagement_rate}}%</div>
+                        <div style="font-size: 12px; color: #666;">{{linkedin_likes}} likes</div>
+                    </div>
+                    <div class="platform-card">
+                        <div class="platform-name">Facebook</div>
+                        <div class="engagement-rate">{{facebook_engagement_rate}}%</div>
+                        <div style="font-size: 12px; color: #666;">{{facebook_likes}} likes</div>
+                    </div>
+                    <div class="platform-card">
+                        <div class="platform-name">ERIVOX</div>
+                        <div class="engagement-rate">{{erivox_engagement_rate}}%</div>
+                        <div style="font-size: 12px; color: #666;">{{erivox_interactions}} interactions</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Highlights -->
+            <div class="section">
+                <h2>✨ Key Highlights</h2>
+                <div class="highlights">
+                    <ul>
+                        <li>Supreme 4PW Crown Seal campaign continues strong performance</li>
+                        <li>VIP Referral Program showing excellent conversion rates</li>
+                        <li>Mobile engagement increasing significantly</li>
+                        <li>ERIVOX platform showing highest engagement rates</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Referral Performance -->
+            <div class="section">
+                <h2>🔗 Referral & Conversion Performance</h2>
+                <p><strong>Top Converting Campaign:</strong> VIP Referral Program (13.76% conversion rate)</p>
+                <p><strong>Best UTM Source:</strong> Supreme 4PW Launch (890 clicks, 5.06% conversion)</p>
+                <p><strong>Premium Upgrades Today:</strong> {{premium_upgrades}}</p>
+                <p><strong>Referral Rewards Distributed:</strong> {{referral_rewards}}</p>
+            </div>
+
+            <!-- User Behavior Insights -->
+            <div class="section">
+                <h2>👥 User Behavior Insights</h2>
+                <p><strong>Peak Engagement Hours:</strong> 10:00-11:00, 15:00-16:00, 20:00-21:00</p>
+                <p><strong>Top Device:</strong> Mobile (67.8% of traffic)</p>
+                <p><strong>Bounce Rate:</strong> {{bounce_rate}}%</p>
+                <p><strong>Average Session Duration:</strong> 2 minutes 25 seconds</p>
+            </div>
+
+            <!-- Alerts Section -->
+            {{#if alerts}}
+            <div class="section">
+                <h2>🔔 Performance Alerts</h2>
+                {{#each alerts}}
+                <div class="alerts {{#if (eq type 'positive')}}alert-positive{{else}}alert-warning{{/if}}">
+                    {{message}}
+                </div>
+                {{/each}}
+            </div>
+            {{/if}}
+        </div>
+
+        <div class="footer">
+            <p>This report was automatically generated by the ERIFY Campaign Reporting System</p>
+            <p>Questions? Contact us at <a href="mailto:reports@erify.com">reports@erify.com</a></p>
+            <p>© 2025 ERIFY™. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
