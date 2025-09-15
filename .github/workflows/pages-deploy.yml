@@ -10,12 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Build
         run: |
-          # Add commands to build your project here
-          echo "Building project..."
+          echo "Building ERIFY™ Supreme 4 Branding Site..."
+          chmod +x build.sh
+          ./build.sh
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
