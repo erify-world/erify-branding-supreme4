@@ -1,0 +1,25 @@
+# ERIFY Campaign Performance Reporting Requirements
+# Required Python packages for automated campaign performance reporting
+
+# Core dependencies
+schedule==1.2.0
+requests==2.31.0
+
+# Email support  
+secure-smtplib==0.1.1
+
+# Data processing
+python-dateutil==2.8.2
+
+# Optional: Enhanced email templates
+jinja2==3.1.2
+
+# Optional: Environment variable management
+python-dotenv==1.0.0
+
+# Optional: Enhanced logging
+colorlog==6.7.0
+
+# Development dependencies (optional)
+# pytest==7.4.0
+# pytest-cov==4.1.0

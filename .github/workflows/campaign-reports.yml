@@ -1,0 +1,91 @@
+name: Campaign Performance Reports
+
+on:
+  schedule:
+    # Daily report at 9:00 AM UTC
+    - cron: '0 9 * * *'
+    # Weekly report on Mondays at 9:00 AM UTC  
+    - cron: '0 9 * * 1'
+    # Monthly report on the 1st at 9:00 AM UTC
+    - cron: '0 9 1 * *'
+  
+  # Allow manual triggering
+  workflow_dispatch:
+    inputs:
+      report_type:
+        description: 'Type of report to generate'
+        required: true
+        default: 'daily'
+        type: choice
+        options:
+        - daily
+        - weekly
+        - monthly
+
+jobs:
+  generate-reports:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          
+      - name: Install dependencies
+        run: |
+          cd scripts
+          pip install -r requirements.txt
+          
+      - name: Determine report type
+        id: report-type
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "type=${{ github.event.inputs.report_type }}" >> $GITHUB_OUTPUT
+          elif [ "$(date +%u)" = "1" ] && [ "$(date +%d)" = "01" ]; then
+            echo "type=monthly" >> $GITHUB_OUTPUT
+          elif [ "$(date +%u)" = "1" ]; then
+            echo "type=weekly" >> $GITHUB_OUTPUT
+          else
+            echo "type=daily" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: Generate campaign performance report
+        env:
+          GA_API_KEY: ${{ secrets.GA_API_KEY }}
+          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+          LINKEDIN_API_KEY: ${{ secrets.LINKEDIN_API_KEY }}
+          FACEBOOK_API_KEY: ${{ secrets.FACEBOOK_API_KEY }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+        run: |
+          cd scripts
+          python campaign_reports.py report ${{ steps.report-type.outputs.type }}
+          
+      - name: Upload report artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: campaign-reports-${{ steps.report-type.outputs.type }}-${{ github.run_number }}
+          path: reports/
+          retention-days: 30
+          
+      - name: Commit and push reports (if configured)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          # Only commit if there are changes
+          if [ -n "$(git status --porcelain)" ]; then
+            git add reports/
+            git commit -m "📊 Automated ${{ steps.report-type.outputs.type }} campaign performance report - $(date +'%Y-%m-%d')"
+            git push
+          else
+            echo "No changes to commit"
+          fi
