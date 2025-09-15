@@ -12,10 +12,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Test automation system
+        run: npm test
+
       - name: Build
         run: |
           # Add commands to build your project here
           echo "Building project..."
+          # Copy automation files to public directory if needed
+          mkdir -p ./public
+          cp README-automation.md ./public/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
