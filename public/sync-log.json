@@ -1,0 +1,219 @@
+{
+  "lastSync": "2025-09-16T03:03:36.440Z",
+  "success": true,
+  "results": {
+    "analytics": {
+      "users": 17621,
+      "sessions": 25880,
+      "conversions": 889,
+      "videoClicks": 3700,
+      "appOpens": 1762,
+      "pageViews": 49338,
+      "bounceRate": 35.3,
+      "sessionDuration": "4m 53s",
+      "lastUpdated": "2025-09-16T03:03:36.424Z",
+      "metrics": {
+        "daily": {
+          "users": 587,
+          "sessions": 862,
+          "conversions": 29
+        },
+        "weekly": {
+          "users": 4097,
+          "sessions": 6018,
+          "conversions": 206
+        },
+        "monthly": {
+          "users": 17621,
+          "sessions": 25880,
+          "conversions": 889
+        }
+      },
+      "customEvents": {
+        "videoClicks": {
+          "total": 3700,
+          "daily": 123,
+          "weeklyGrowth": "+25.1%"
+        },
+        "appOpens": {
+          "total": 1762,
+          "daily": 58,
+          "weeklyGrowth": "+7.1%"
+        },
+        "referralClicks": {
+          "total": 3347,
+          "daily": 111,
+          "weeklyGrowth": "+17.9%"
+        }
+      },
+      "topPages": [
+        {
+          "path": "/",
+          "views": 14096,
+          "title": "ERIFY Dashboard"
+        },
+        {
+          "path": "/referral",
+          "views": 10572,
+          "title": "VIP Referral Program"
+        },
+        {
+          "path": "/analytics",
+          "views": 7048,
+          "title": "Analytics Dashboard"
+        }
+      ]
+    },
+    "videos": {
+      "videos": [
+        {
+          "id": "erify-video-previews",
+          "title": "ERIFY Video Previews",
+          "description": "This file contains video recaps and previews for the ERIFY Analytics Dashboard. The GitHub Action automatically parses this file to generate the latest-videos.json data for the dashboard.",
+          "thumbnail": "/images/video-thumb-1.jpg",
+          "duration": "9:20",
+          "views": 9309,
+          "publishedAt": "2025-09-16T03:03:36.426Z",
+          "url": "https://youtube.com/watch?v=erify-video-previews",
+          "category": "general",
+          "tags": []
+        },
+        {
+          "id": "erify-supreme-4-launch-event",
+          "title": "ERIFY Supreme 4 Launch Event",
+          "description": "Exclusive behind-the-scenes look at the Supreme 4 Crown Seal launch event featuring luxury fintech innovations, VIP announcements, and the unveiling of our latest premium features.",
+          "thumbnail": "/images/video-thumb-2.jpg",
+          "duration": "4:32",
+          "views": 15420,
+          "publishedAt": "2025-01-15T00:00:00.000Z",
+          "url": "https://youtube.com/watch?v=erify-supreme4-launch",
+          "category": "launch",
+          "tags": [
+            "launch",
+            "supreme4",
+            "crown-seal",
+            "luxury",
+            "fintech"
+          ]
+        },
+        {
+          "id": "vip-referral-program-deep-dive",
+          "title": "VIP Referral Program Deep Dive",
+          "description": "Complete walkthrough of the ERIFY VIP referral system, commission structures, tier benefits, and how to maximize your earnings with proven strategies from top performers.",
+          "thumbnail": "/images/video-thumb-3.jpg",
+          "duration": "6:15",
+          "views": 8750,
+          "publishedAt": "2025-01-14T00:00:00.000Z",
+          "url": "https://youtube.com/watch?v=vip-referral-deep-dive",
+          "category": "tutorial",
+          "tags": [
+            "referral",
+            "vip",
+            "tutorial",
+            "earnings",
+            "strategy"
+          ]
+        },
+        {
+          "id": "luxury-fintech-challenge-highlights",
+          "title": "Luxury Fintech Challenge Highlights",
+          "description": "Best moments from our recent luxury fintech challenge featuring top participants, innovative solutions, exclusive prizes, and behind-the-scenes competition footage.",
+          "thumbnail": "/images/video-thumb-4.jpg",
+          "duration": "3:28",
+          "views": 12340,
+          "publishedAt": "2025-01-13T00:00:00.000Z",
+          "url": "https://youtube.com/watch?v=luxury-fintech-challenge",
+          "category": "highlights",
+          "tags": [
+            "challenge",
+            "fintech",
+            "luxury",
+            "highlights",
+            "competition"
+          ]
+        },
+        {
+          "id": "analytics-dashboard-tutorial",
+          "title": "Analytics Dashboard Tutorial",
+          "description": "Learn how to navigate and interpret your ERIFY analytics dashboard for maximum insights, tracking performance metrics, and making data-driven decisions to optimize your strategy.",
+          "thumbnail": "/images/video-thumb-5.jpg",
+          "duration": "5:47",
+          "views": 6890,
+          "publishedAt": "2025-01-12T00:00:00.000Z",
+          "url": "https://youtube.com/watch?v=analytics-dashboard-tutorial",
+          "category": "tutorial",
+          "tags": [
+            "analytics",
+            "dashboard",
+            "tutorial",
+            "metrics",
+            "insights"
+          ]
+        },
+        {
+          "id": "erify-brand-evolution-journey",
+          "title": "ERIFY Brand Evolution Journey",
+          "description": "The complete story of ERIFY's brand transformation from startup to luxury fintech powerhouse, featuring exclusive interviews with founders, key milestones, and future vision.",
+          "thumbnail": "/images/video-thumb-6.jpg",
+          "duration": "7:23",
+          "views": 9650,
+          "publishedAt": "2025-01-11T00:00:00.000Z",
+          "url": "https://youtube.com/watch?v=erify-brand-evolution",
+          "category": "highlights",
+          "tags": [
+            "brand",
+            "evolution",
+            "story",
+            "luxury",
+            "interviews"
+          ]
+        },
+        {
+          "id": "mobile-app-launch-preview",
+          "title": "Mobile App Launch Preview",
+          "description": "First look at the upcoming ERIFY mobile application with exclusive features, UI/UX walkthrough, beta access information, and release timeline updates.",
+          "thumbnail": "/images/video-thumb-7.jpg",
+          "duration": "4:15",
+          "views": 11230,
+          "publishedAt": "2025-01-10T00:00:00.000Z",
+          "url": "https://youtube.com/watch?v=mobile-app-launch-preview",
+          "category": "launch",
+          "tags": [
+            "mobile",
+            "app",
+            "launch",
+            "preview",
+            "beta"
+          ]
+        },
+        {
+          "id": "video-format-guidelines",
+          "title": "Video Format Guidelines",
+          "description": "When adding new videos to this file, please use the following format:",
+          "thumbnail": "/images/video-thumb-8.jpg",
+          "duration": "8:41",
+          "views": 15671,
+          "publishedAt": "2025-09-16T03:03:36.426Z",
+          "url": "https://youtube.com/watch?v=video-format-guidelines",
+          "category": "general",
+          "tags": []
+        }
+      ],
+      "lastUpdated": "2025-09-16T03:03:36.425Z",
+      "totalVideos": 8,
+      "totalViews": 89260,
+      "categories": [
+        "general",
+        "launch",
+        "tutorial",
+        "highlights"
+      ],
+      "featuredVideo": {
+        "id": "video-format-guidelines",
+        "reason": "Most viewed this week"
+      }
+    },
+    "errors": []
+  },
+  "errors": []
+}

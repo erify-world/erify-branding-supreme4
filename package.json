@@ -1,0 +1,41 @@
+{
+  "name": "erify-analytics-dashboard",
+  "version": "1.0.0",
+  "description": "ERIFY Analytics Dashboard - Real-time tracking of campaign performance with luxury dark branding",
+  "main": "server.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "server": "node server.js",
+    "sync-data": "node scripts/sync-data.js",
+    "sync-ga4": "node scripts/sync-ga4.js",
+    "sync-videos": "node scripts/sync-videos.js"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "express": "^4.18.2",
+    "@google-analytics/data": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "vite": "^4.4.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/erify-world/erify-branding-supreme4.git"
+  },
+  "keywords": [
+    "erify",
+    "analytics",
+    "dashboard",
+    "react",
+    "vite",
+    "fintech"
+  ],
+  "author": "ERIFY™",
+  "license": "MIT"
+}

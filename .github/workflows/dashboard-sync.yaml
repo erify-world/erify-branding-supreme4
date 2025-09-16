@@ -1,0 +1,191 @@
+name: ERIFY Dashboard Data Sync
+
+on:
+  schedule:
+    # Run every hour at minute 0
+    - cron: '0 * * * *'
+  
+  workflow_dispatch:
+    # Allow manual triggering
+    inputs:
+      sync_type:
+        description: 'Type of sync to perform'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+        - all
+        - analytics
+        - videos
+  
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/video-previews.md'
+      - 'scripts/**'
+      - '.github/workflows/dashboard-sync.yaml'
+
+jobs:
+  sync-dashboard-data:
+    name: Sync Analytics & Video Data
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write  # To commit updated JSON files
+      
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          # Install Google Analytics Data API
+          npm install @google-analytics/data
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "ERIFY Analytics Bot"
+          git config --global user.email "analytics-bot@erify.com"
+
+      - name: Sync Analytics Data
+        if: ${{ github.event.inputs.sync_type == 'all' || github.event.inputs.sync_type == 'analytics' || github.event.inputs.sync_type == '' }}
+        env:
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
+          GA4_SERVICE_ACCOUNT_JSON: ${{ secrets.GA4_SERVICE_ACCOUNT_JSON }}
+        run: |
+          echo "🔄 Starting GA4 analytics data sync..."
+          node scripts/sync-ga4.js
+          
+      - name: Sync Video Data
+        if: ${{ github.event.inputs.sync_type == 'all' || github.event.inputs.sync_type == 'videos' || github.event.inputs.sync_type == '' }}
+        run: |
+          echo "🔄 Starting video data sync..."
+          node scripts/sync-videos.js
+
+      - name: Full Data Sync
+        if: ${{ github.event.inputs.sync_type == 'all' || github.event.inputs.sync_type == '' }}
+        env:
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
+          GA4_SERVICE_ACCOUNT_JSON: ${{ secrets.GA4_SERVICE_ACCOUNT_JSON }}
+        run: |
+          echo "🔄 Running complete data sync..."
+          node scripts/sync-data.js
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet HEAD -- public/; then
+            echo "No changes detected in public/ directory"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "Changes detected in public/ directory"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push changes
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          # Add updated JSON files
+          git add public/analytics.json public/latest-videos.json public/sync-log.json
+          
+          # Create commit message with timestamp
+          TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M:%S UTC')
+          COMMIT_MSG="📊 Update dashboard data - ${TIMESTAMP}"
+          
+          # Add details about what was synced
+          if [[ "${{ github.event.inputs.sync_type }}" == "analytics" ]]; then
+            COMMIT_MSG="📊 Update analytics data - ${TIMESTAMP}"
+          elif [[ "${{ github.event.inputs.sync_type }}" == "videos" ]]; then
+            COMMIT_MSG="🎬 Update video data - ${TIMESTAMP}"
+          fi
+          
+          git commit -m "${COMMIT_MSG}"
+          git push origin main
+
+      - name: Update deployment status
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          echo "✅ Dashboard data sync completed successfully"
+          echo "📊 Analytics data: public/analytics.json"
+          echo "🎬 Video data: public/latest-videos.json"
+          echo "📝 Sync log: public/sync-log.json"
+          echo ""
+          echo "🚀 Changes will be deployed automatically via Cloudflare Pages"
+
+      - name: No changes notification
+        if: steps.changes.outputs.has_changes == 'false'
+        run: |
+          echo "ℹ️ No data changes detected - dashboard already up to date"
+
+  # Optional: Deploy to Cloudflare Pages (if not using automatic GitHub integration)
+  deploy-to-cloudflare:
+    name: Deploy to Cloudflare Pages
+    needs: sync-dashboard-data
+    if: ${{ needs.sync-dashboard-data.outputs.has_changes == 'true' || github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build dashboard
+        run: npm run build
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: erify-analytics-dashboard
+          directory: dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deployment success
+        run: |
+          echo "🚀 ERIFY Analytics Dashboard deployed successfully to Cloudflare Pages"
+          echo "🌐 Dashboard URL: https://erify-analytics-dashboard.pages.dev"
+
+  # Notification job (optional)
+  notify-completion:
+    name: Notify Sync Completion
+    needs: [sync-dashboard-data]
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Sync Summary
+        run: |
+          echo "📋 ERIFY Dashboard Sync Summary"
+          echo "================================"
+          echo "Trigger: ${{ github.event_name }}"
+          echo "Sync Type: ${{ github.event.inputs.sync_type || 'all' }}"
+          echo "Status: ${{ needs.sync-dashboard-data.result }}"
+          echo "Timestamp: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          echo ""
+          
+          if [[ "${{ needs.sync-dashboard-data.result }}" == "success" ]]; then
+            echo "✅ Dashboard data sync completed successfully"
+          else
+            echo "❌ Dashboard data sync failed"
+            exit 1
+          fi

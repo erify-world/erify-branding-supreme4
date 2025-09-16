@@ -137,3 +137,8 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Keep important dashboard data files
+!public/analytics.json
+!public/latest-videos.json
+!public/sync-log.json

@@ -1,0 +1,62 @@
+{
+  "users": 17621,
+  "sessions": 25880,
+  "conversions": 889,
+  "videoClicks": 3700,
+  "appOpens": 1762,
+  "pageViews": 49338,
+  "bounceRate": 35.3,
+  "sessionDuration": "4m 53s",
+  "lastUpdated": "2025-09-16T03:03:36.424Z",
+  "metrics": {
+    "daily": {
+      "users": 587,
+      "sessions": 862,
+      "conversions": 29
+    },
+    "weekly": {
+      "users": 4097,
+      "sessions": 6018,
+      "conversions": 206
+    },
+    "monthly": {
+      "users": 17621,
+      "sessions": 25880,
+      "conversions": 889
+    }
+  },
+  "customEvents": {
+    "videoClicks": {
+      "total": 3700,
+      "daily": 123,
+      "weeklyGrowth": "+25.1%"
+    },
+    "appOpens": {
+      "total": 1762,
+      "daily": 58,
+      "weeklyGrowth": "+7.1%"
+    },
+    "referralClicks": {
+      "total": 3347,
+      "daily": 111,
+      "weeklyGrowth": "+17.9%"
+    }
+  },
+  "topPages": [
+    {
+      "path": "/",
+      "views": 14096,
+      "title": "ERIFY Dashboard"
+    },
+    {
+      "path": "/referral",
+      "views": 10572,
+      "title": "VIP Referral Program"
+    },
+    {
+      "path": "/analytics",
+      "views": 7048,
+      "title": "Analytics Dashboard"
+    }
+  ]
+}
