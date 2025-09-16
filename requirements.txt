@@ -1,0 +1,6 @@
+# Required Python dependencies for ERIFY Elite Launch Automation
+slack-sdk>=3.24.0
+discord.py>=2.3.0
+sendgrid>=6.10.0
+requests>=2.31.0
+PyYAML>=6.0
