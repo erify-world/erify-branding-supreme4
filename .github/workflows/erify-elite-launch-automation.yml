@@ -1,0 +1,102 @@
+name: ERIFY Elite Launch Automation
+
+on:
+  schedule:
+    # Run daily at 9 AM UTC for production announcements
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Launch Mode'
+        required: true
+        default: 'simulation'
+        type: choice
+        options:
+        - simulation
+        - production
+      force_run:
+        description: 'Force run regardless of schedule'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  # Default to simulation mode for safety
+  ERIFY_MODE: ${{ github.event.inputs.mode || 'simulation' }}
+
+jobs:
+  launch-communications:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.mode || 'simulation' }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests pyyaml discord.py slack-sdk
+
+      - name: Configure environment variables
+        run: |
+          echo "Setting up environment for mode: ${{ env.ERIFY_MODE }}"
+          if [ "${{ env.ERIFY_MODE }}" = "simulation" ]; then
+            echo "ERIFY_SIMULATION_MODE=true" >> $GITHUB_ENV
+            echo "ERIFY_PRODUCTION_MODE=false" >> $GITHUB_ENV
+            echo "TARGET_BRANCH=launch-sim-test" >> $GITHUB_ENV
+            echo "SLACK_CHANNEL=#erify-test" >> $GITHUB_ENV
+            echo "EMAIL_TARGET=test@erify.com" >> $GITHUB_ENV
+            echo "DISCORD_TARGET=test-server" >> $GITHUB_ENV
+          else
+            echo "ERIFY_SIMULATION_MODE=false" >> $GITHUB_ENV
+            echo "ERIFY_PRODUCTION_MODE=true" >> $GITHUB_ENV
+            echo "TARGET_BRANCH=main" >> $GITHUB_ENV
+            echo "SLACK_CHANNEL=#erify-announcements" >> $GITHUB_ENV
+            echo "EMAIL_TARGET=stakeholders@erify.com" >> $GITHUB_ENV
+            echo "DISCORD_TARGET=live-community" >> $GITHUB_ENV
+          fi
+
+      - name: Create launch simulation branch if needed
+        if: env.ERIFY_MODE == 'simulation'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git checkout -b launch-sim-test 2>/dev/null || git checkout launch-sim-test
+
+      - name: Execute launch automation script
+        run: python .github/scripts/launch-automation.py
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update README for launch
+        run: |
+          python .github/scripts/update-readme.py
+          git add README.md
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "🚀 ERIFY Elite Launch Update - ${{ env.ERIFY_MODE }} mode"
+            git push origin ${{ env.TARGET_BRANCH }}
+          fi
+
+      - name: Create summary report
+        run: |
+          echo "## ERIFY Elite Launch Automation Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Mode**: ${{ env.ERIFY_MODE }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch**: ${{ env.TARGET_BRANCH }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Slack Channel**: ${{ env.SLACK_CHANNEL }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Email Target**: ${{ env.EMAIL_TARGET }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Discord Target**: ${{ env.DISCORD_TARGET }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Timestamp**: $(date -u)" >> $GITHUB_STEP_SUMMARY
